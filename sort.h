@@ -34,12 +34,13 @@ void heap_sort(int *array, size_t size);
 void radix_sort(int *array, size_t size);
 void bitonic_sort(int *array, size_t size);
 void quick_sort_hoare(int *array, size_t size);
-
+void merge(int *array, int low, int mid, int high, int *temp);
+void sift_down(int *array, int low, int high, size_t size);
+void swap(int *array, int i, int j);
 /* Prototypes for print functions */
 void print_list(const listint_t *list);
 void print_array(const int *array, size_t size);
 
 /* Prototypes for helper functions */
-void heapify(int *array, int end, int start, size_t size);
-
+void heapify(int *array, size_t size);
 #endif /* SORT_H */

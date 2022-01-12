@@ -1,72 +1,88 @@
 #include "sort.h"
 
 /**
- * heap_sort - Sorting array using heap sort algorithm
- * @array: Array to be sorted
- * @size: Size of the array
- * Return: 0
+ * heap_sort - sorts array of integers in ascending order
+ * using Heap Sort algorithm
+ * @array: list of integers
+ * @size: size of array
  */
 void heap_sort(int *array, size_t size)
 {
-	int i;
+	int high;
 
-	if (!array || size < 2)
-		return;
+	heapify(array, size);
+	high = size - 1;
 
-	for (i = size / 2; i >= 0; i--)
-		heapify(array, size, i, size);
-	for (i = size - 1; i >= 0; i--)
+	while (high > 0)
 	{
-		swap(&array[i], &array[0]);
-		if (i != 0)
-			print_array(array, size);
-		heapify(array, i, 0, size);
-	}
-}
-
-/**
- * heapify - Recursive function to sort binary tree
- * @array: array to be sorted as binary tree
- * @end: Last node in binary tree
- * @start: First node of binary tree
- * @size: Size of the array to sort
- * Return: 0
- */
-void heapify(int *array, int end, int start, size_t size)
-{
-	int max = start;
-	int left = 2 * start + 1;
-	int right = 2 * start + 2;
-
-	if (!array || size < 2)
-		return;
-
-	if (left < end && array[left] > array[max])
-		max = left;
-
-	if (right < end && array[right] > array[max])
-		max = right;
-
-	if (start != max)
-	{
-		swap(&array[start], &array[max]);
+		swap(array, array[high], array[0]);
 		print_array(array, size);
-		heapify(array, end, max, size);
+		high = size - 1;
+		printf("BEFORE INITIAL SIFT_DOWN\n");
+		sift_down(array, 0, high, size);
 	}
 }
 
 /**
- * swap - Function that swaps two values
- *
- * @a: Fisrt value
- * @b: Second value
- * Return: 0
+ * heapify - turns array into heap
+ * @array: list of integers
+ * @size: size of array
  */
-void swap(int *a, int *b)
+void heapify(int *array, size_t size)
 {
-	int tmp;
+	int low;
 
-	tmp = *b;
-	*b = *a;
-	*a = tmp;
+	low = (size - 2) / 2;
+
+	while (low >= 0)
+	{
+		printf("BEFORE HEAPIFY SIFT_DOWN\n");
+		sift_down(array, low, size - 1, size);
+		low = low - 1;
+	}
+}
+
+/**
+ * sift_down - sorts heap so parent values are larger than child values
+ * @array: list of integers
+ * @low: start of array
+ * @high: end of array
+ */
+void sift_down(int *array, int low, int high, size_t size)
+{
+	int root;
+	int child;
+
+	root = low;
+
+	while (root * 2 + 1 <= high)
+	{
+		child = root * 2 + 1;
+		if (child + 1 <= high && array[child] < array[child + 1])
+			child = child + 1;
+		if (array[root] < array[child])
+		{
+			printf("BEFORE SIFT_DOWN SWAP\n");
+			swap(array, array[root], array[child]);
+			print_array(array, size);
+			root = child;
+		}
+		else
+			return;
+	}
+}
+
+/**
+ * swap - swaps two values in array
+ * @array: list of integers
+ * @i: index position of first value
+ * @j; index position of second value
+ */
+void swap(int *array, int i, int j)
+{
+	int temp;
+
+	temp = array[i];
+	array[i] = array[j];
+	array[j] = temp;
 }
