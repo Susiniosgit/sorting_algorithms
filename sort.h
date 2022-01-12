@@ -36,7 +36,6 @@ void bitonic_sort(int *array, size_t size);
 void quick_sort_hoare(int *array, size_t size);
 void merge(int *array, int low, int mid, int high, int *temp);
 void sift_down(int *array, int low, int high, size_t size);
-void swap(int *array, int i, int j);
 /* Prototypes for print functions */
 void print_list(const listint_t *list);
 void print_array(const int *array, size_t size);
